@@ -5,10 +5,10 @@ public class CubeController : MonoBehaviour
     // Movement speed
     public float moveSpeed = 15f;
     public float sensitivityX = 1f; // Sensitivity for horizontal (yaw) rotation
-        public float sensitivityY = 1f; // Sensitivity for vertical (pitch) rotation
+    public float sensitivityY = 1f; // Sensitivity for vertical (pitch) rotation
 
-        private float rotationX = 0f; // To track the current horizontal rotation
-        private float rotationY = 0f; // To track the current vertical rotation
+    private float rotationX = 0f; // To track the current horizontal rotation
+    private float rotationY = 0f; // To track the current vertical rotation
 
     // Update is called once per frame
     void Update()
@@ -22,11 +22,6 @@ public class CubeController : MonoBehaviour
 
         // Move the cube using the controller input
         transform.Translate(movement * moveSpeed * Time.deltaTime);
-
-
-
-    
-         
     
         // Get input from the right joystick
         float horizontalInput = Input.GetAxis("Camera X"); // Axis for right stick X (yaw)
@@ -41,12 +36,6 @@ public class CubeController : MonoBehaviour
 
         // Apply rotation to the camera
         transform.rotation = Quaternion.Euler(rotationY, rotationX, 0f);
-    
-
-
-
-
-
         
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CameraController : MonoBehaviour
 {
@@ -8,20 +9,24 @@ public class CameraController : MonoBehaviour
     private float rotationX = 0f; // To track the current horizontal rotation
     private float rotationY = 0f; // To track the current vertical rotation
 
+    private Vector2 lookInputValue;
+
+    private void OnLook(InputValue value)
+    {
+        lookInputValue = value.Get<Vector2>();
+        Debug.Log(lookInputValue);
+    }
+
     void Update()
     {
-        // Get input from the right joystick
-        float horizontalInput = Input.GetAxis("Camera X"); // Axis for right stick X (yaw)
-        float verticalInput = Input.GetAxis("Camera Y"); // Axis for right stick Y (pitch)
+        // Update the rotationX and rotationY based on the input
+        rotationX += lookInputValue.x * sensitivityX;
+        rotationY += lookInputValue.y * sensitivityY;
 
-        // Update rotation angles
-        rotationX += horizontalInput * sensitivityX/10f; // Adjust horizontal rotation (yaw)
-        rotationY -= verticalInput * sensitivityY/10f; // Adjust vertical rotation (pitch)
-
-        // Clamp vertical rotation to prevent flipping
+        // Clamp the vertical rotation to -90 and 90 degrees
         rotationY = Mathf.Clamp(rotationY, -90f, 90f);
 
-        // Apply rotation to the camera
-        transform.rotation = Quaternion.Euler(rotationY, rotationX, 0f);
+        // Apply the rotation to the camera
+        transform.localRotation = Quaternion.Euler(-rotationY, rotationX, 0f);
     }
 }

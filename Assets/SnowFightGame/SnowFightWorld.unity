@@ -132,7 +132,6 @@ GameObject:
   m_Component:
   - component: {fileID: 122565631}
   - component: {fileID: 122565630}
-  - component: {fileID: 122565629}
   m_Layer: 0
   m_Name: Main Camera (3)
   m_TagString: MainCamera
@@ -140,14 +139,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &122565629
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 122565628}
-  m_Enabled: 1
 --- !u!20 &122565630
 Camera:
   m_ObjectHideFlags: 0
@@ -319,10 +310,13 @@ GameObject:
   - component: {fileID: 347835580}
   - component: {fileID: 347835579}
   - component: {fileID: 347835578}
+  - component: {fileID: 347835586}
   - component: {fileID: 347835577}
+  - component: {fileID: 347835584}
   - component: {fileID: 347835581}
   - component: {fileID: 347835582}
   - component: {fileID: 347835583}
+  - component: {fileID: 347835585}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Player
@@ -425,7 +419,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 347835576}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e0c92bbdb98c60d49a0db062c9392ce1, type: 3}
   m_Name: 
@@ -454,13 +448,84 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 347835576}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8498918533ba7445a404b91b975d698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sensitivityX: 1
   sensitivityY: 1
+--- !u!114 &347835584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347835576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: a6508bcd5c5aaab4f92e8322c9b5cf42, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Menu
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 434004080}
+--- !u!114 &347835585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347835576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd3e9863b6bc30d4ca889827fc7008c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 15
+  rb: {fileID: 347835586}
+--- !u!54 &347835586
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347835576}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &434004078
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,7 +536,6 @@ GameObject:
   m_Component:
   - component: {fileID: 434004081}
   - component: {fileID: 434004080}
-  - component: {fileID: 434004079}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -479,14 +543,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &434004079
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 434004078}
-  m_Enabled: 1
 --- !u!20 &434004080
 Camera:
   m_ObjectHideFlags: 0
@@ -568,7 +624,7 @@ GameObject:
   - component: {fileID: 446833800}
   - component: {fileID: 446833799}
   m_Layer: 0
-  m_Name: Player1 (1)
+  m_Name: Player 2
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -701,7 +757,6 @@ GameObject:
   m_Component:
   - component: {fileID: 510302889}
   - component: {fileID: 510302888}
-  - component: {fileID: 510302887}
   m_Layer: 0
   m_Name: Main Camera (1)
   m_TagString: MainCamera
@@ -709,14 +764,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &510302887
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 510302886}
-  m_Enabled: 1
 --- !u!20 &510302888
 Camera:
   m_ObjectHideFlags: 0
@@ -793,7 +840,6 @@ GameObject:
   m_Component:
   - component: {fileID: 546738806}
   - component: {fileID: 546738805}
-  - component: {fileID: 546738804}
   m_Layer: 0
   m_Name: Main Camera (2)
   m_TagString: MainCamera
@@ -801,14 +847,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &546738804
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 546738803}
-  m_Enabled: 1
 --- !u!20 &546738805
 Camera:
   m_ObjectHideFlags: 0
@@ -952,7 +990,7 @@ GameObject:
   - component: {fileID: 1661360918}
   - component: {fileID: 1661360917}
   m_Layer: 0
-  m_Name: Player1 (2)
+  m_Name: Player 3
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1242,7 +1280,7 @@ GameObject:
   - component: {fileID: 2046110635}
   - component: {fileID: 2046110634}
   m_Layer: 0
-  m_Name: Player1 (3)
+  m_Name: Player 3
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
