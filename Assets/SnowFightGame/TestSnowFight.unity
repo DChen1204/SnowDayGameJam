@@ -231,10 +231,9 @@ GameObject:
   - component: {fileID: 347835577}
   - component: {fileID: 347835584}
   - component: {fileID: 347835585}
-  - component: {fileID: 347835587}
   m_Layer: 0
   m_Name: Player1
-  m_TagString: Player
+  m_TagString: Player 1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -318,14 +317,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 347835576}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.21563302, z: -0, w: 0.9764745}
+  m_LocalRotation: {x: -0.019311816, y: 0.2155908, z: 0.0042645927, w: 0.9762835}
   m_LocalPosition: {x: -8.44, y: 3.6, z: -15.01}
   m_LocalScale: {x: 2, y: 2, z: 1.8804215}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2125384170}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 24.905, z: 0}
+  m_LocalEulerAnglesHint: {x: -2.266, y: 24.905, z: 0}
 --- !u!114 &347835584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,6 +371,8 @@ MonoBehaviour:
   rb: {fileID: 347835586}
   sensitivityX: 1
   sensitivityY: 1
+  firepoint: {fileID: 2125384170}
+  snowballPrefab: {fileID: 3715115986047352522, guid: 7d82628fd652d1f498acd8b2707306d2, type: 3}
 --- !u!54 &347835586
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -399,20 +400,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &347835587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347835576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90c9d75fc7b724244bff8c25d90e423c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firepoint: {fileID: 2125384170}
-  snowballPrefab: {fileID: 3715115986047352522, guid: 7d82628fd652d1f498acd8b2707306d2, type: 3}
 --- !u!1 &1611258630
 GameObject:
   m_ObjectHideFlags: 0

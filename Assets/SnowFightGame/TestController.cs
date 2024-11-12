@@ -17,6 +17,10 @@ public class TestController : MonoBehaviour
     private float rotationY = 0f;
     private Vector2 lookInputValue;
 
+    // Shooting Snowball
+    public Transform firepoint;
+    public GameObject snowballPrefab;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -32,6 +36,13 @@ public class TestController : MonoBehaviour
     {
         lookInputValue = value.Get<Vector2>();
         Debug.Log(lookInputValue);
+    }
+
+    private void OnButtonA()
+    {
+        // Shoot Snowball
+        Instantiate(snowballPrefab, firepoint.position, transform.rotation);
+        Debug.Log("Button A Pressed");
     }
 
     private void CameraRotation()
