@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.MinigameFramework.Scripts.Framework.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class TestController : MonoBehaviour
+public class TestController : Pawn
 {
     // Player Movement
     [SerializeField] private float moveSpeed = 15f;
@@ -26,34 +27,50 @@ public class TestController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    private void OnMove(InputValue value)
+    protected override void OnActionPressed(InputAction.CallbackContext context)
     {
-        moveInputValue = value.Get<Vector2>();
-        Debug.Log(moveInputValue);
+        // Player Movement
+        if (context.action.name == "Move")
+        {
+            moveInputValue = context.ReadValue<Vector2>();
+            Debug.Log(moveInputValue);
+        }
+        
+
+        if(context.action.name == "ButtonA")
+        {
+            Debug.Log("Button A Pressed");
+        }
     }
 
-    private void OnLook(InputValue value)
-    {
-        lookInputValue = value.Get<Vector2>();
-        Debug.Log(lookInputValue);
-    }
+    // private void OnMove(InputValue value)
+    // {
+    //     moveInputValue = value.Get<Vector2>();
+    //     Debug.Log(moveInputValue);
+    // }
 
-    private void OnButtonA()
-    {
-        // Shoot Snowball
-        Instantiate(snowballPrefab, firepoint.position, transform.rotation);
-        Debug.Log("Button A Pressed");
-    }
+    // private void OnLook(InputValue value)
+    // {
+    //     lookInputValue = value.Get<Vector2>();
+    //     Debug.Log(lookInputValue);
+    // }
 
-    private void CameraRotation()
-    {
-        rotationX += lookInputValue.x * sensitivityX;
-        rotationY += lookInputValue.y * sensitivityY;
+    // private void OnButtonA()
+    // {
+    //     // Shoot Snowball
+    //     Instantiate(snowballPrefab, firepoint.position, transform.rotation);
+    //     Debug.Log("Button A Pressed");
+    // }
 
-        rotationY = Mathf.Clamp(rotationY, -90f, 90f);
+    // private void CameraRotation()
+    // {
+    //     rotationX += lookInputValue.x * sensitivityX;
+    //     rotationY += lookInputValue.y * sensitivityY;
 
-        transform.localRotation = Quaternion.Euler(-rotationY, rotationX, 0f);
-    }
+    //     rotationY = Mathf.Clamp(rotationY, -90f, 90f);
+
+    //     transform.localRotation = Quaternion.Euler(-rotationY, rotationX, 0f);
+    // }
 
     private void Move()
     {
@@ -61,10 +78,10 @@ public class TestController : MonoBehaviour
         rb.velocity = movement * moveSpeed;
     }
 
-    private void Update()
-    {
-        CameraRotation();
-    }
+    // private void Update()
+    // {
+    //     CameraRotation();
+    // }
 
     private void FixedUpdate()
     {
