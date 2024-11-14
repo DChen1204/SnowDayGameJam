@@ -1,0 +1,70 @@
+using System.Collections;
+using System.Collections.Generic;
+using Game.MinigameFramework.Scripts.Framework.Input;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class PlayerController : Pawn
+{
+    // Player Movement
+    [SerializeField] private float moveSpeed = 15f;
+    [SerializeField] private Rigidbody rb;
+    private Vector2 moveInputValue;
+
+    // Camera Rotation
+    [SerializeField] private float sensitivityX = 1f;
+    [SerializeField] private float sensitivityY = 1f;
+    private float rotationX = 0f;
+    private float rotationY = 0f;
+    private Vector2 lookInputValue;
+
+    // Shooting Snowball
+    // public Transform firepoint;
+    // public GameObject snowballPrefab;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    protected override void OnActionPressed(InputAction.CallbackContext context)
+    {
+        // Player Movement
+        if (context.action.name == "Move")
+        {
+            moveInputValue = context.ReadValue<Vector2>();
+            Debug.Log(moveInputValue);
+        }
+
+        if(context.action.name == "ButtonR")
+        {
+            Debug.Log("Button R Pressed");
+        }
+    }
+
+    // private void CameraRotation()
+    // {
+    //     rotationX += lookInputValue.x * sensitivityX;
+    //     rotationY += lookInputValue.y * sensitivityY;
+
+    //     rotationY = Mathf.Clamp(rotationY, -90f, 90f);
+
+    //     transform.localRotation = Quaternion.Euler(-rotationY, rotationX, 0f);
+    // }
+
+    private void Move()
+    {
+        Vector3 movement = new Vector3(moveInputValue.x, 0, moveInputValue.y);
+        rb.velocity = movement * moveSpeed;
+    }
+
+    // private void Update()
+    // {
+    //     CameraRotation();
+    // }
+
+    private void FixedUpdate()
+    {
+        Move();
+    }
+}
