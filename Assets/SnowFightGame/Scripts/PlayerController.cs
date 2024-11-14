@@ -22,32 +22,44 @@ public class PlayerController : Pawn
     public Transform firePoint;
     public GameObject snowballPrefab;
 
+    // Team
+    public int team;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+
+        // Get the team assignment after 1 second
+        StartCoroutine(GetTeamAssignment());
+    }
+
+    IEnumerator GetTeamAssignment()
+    {
+        yield return new WaitForSeconds(1f);
+
+        if(team == 1)
+        {
+            GetComponent<Renderer>().material.color = Color.red;
+        }
+        else if(team == 2)
+        {
+            GetComponent<Renderer>().material.color = Color.blue;
+        }
     }
 
     protected override void OnActionPressed(InputAction.CallbackContext context)
     {
-        // Player Movement
-        if (context.action.name == "Move")
+        switch (context.action.name)
         {
-            moveInputValue = context.ReadValue<Vector2>();
-            Debug.Log(moveInputValue);
-        }
-
-        // Camera Rotation
-        if (context.action.name == "Look")
-        {
-            lookInputValue = context.ReadValue<Vector2>();
-            CameraRotation();
-        }
-
-        // Shooting Snowball
-        if(context.action.name == "ButtonR")
-        {
-            LaunchSnowball();
-            Debug.Log("Button R Pressed");
+            case "Move":
+                moveInputValue = context.ReadValue<Vector2>();
+                break;
+            case "Look":
+                lookInputValue = context.ReadValue<Vector2>();
+                break;
+            case "ButtonR":
+                LaunchSnowball();
+                break;
         }
     }
 
@@ -70,7 +82,7 @@ public class PlayerController : Pawn
     private void LaunchSnowball()
     {
         GameObject snowball = Instantiate(snowballPrefab, firePoint.position, firePoint.rotation);
-        snowball.GetComponent<Snowball>().Shoot(transform.forward);
+        snowball.GetComponent<Snowball>().Shoot(transform.forward, team);
     }
 
     private void Update()
