@@ -19,8 +19,8 @@ public class PlayerController : Pawn
     private Vector2 lookInputValue;
 
     // Shooting Snowball
-    // public Transform firepoint;
-    // public GameObject snowballPrefab;
+    public Transform firePoint;
+    public GameObject snowballPrefab;
 
     private void Awake()
     {
@@ -36,21 +36,30 @@ public class PlayerController : Pawn
             Debug.Log(moveInputValue);
         }
 
+        // Camera Rotation
+        if (context.action.name == "Look")
+        {
+            lookInputValue = context.ReadValue<Vector2>();
+            CameraRotation();
+        }
+
+        // Shooting Snowball
         if(context.action.name == "ButtonR")
         {
+            LaunchSnowball();
             Debug.Log("Button R Pressed");
         }
     }
 
-    // private void CameraRotation()
-    // {
-    //     rotationX += lookInputValue.x * sensitivityX;
-    //     rotationY += lookInputValue.y * sensitivityY;
+    private void CameraRotation()
+    {
+        rotationX += lookInputValue.x * sensitivityX;
+        rotationY += lookInputValue.y * sensitivityY;
 
-    //     rotationY = Mathf.Clamp(rotationY, -90f, 90f);
+        rotationY = Mathf.Clamp(rotationY, -90f, 90f);
 
-    //     transform.localRotation = Quaternion.Euler(-rotationY, rotationX, 0f);
-    // }
+        transform.localRotation = Quaternion.Euler(-rotationY, rotationX, 0f);
+    }
 
     private void Move()
     {
@@ -58,10 +67,16 @@ public class PlayerController : Pawn
         rb.velocity = movement * moveSpeed;
     }
 
-    // private void Update()
-    // {
-    //     CameraRotation();
-    // }
+    private void LaunchSnowball()
+    {
+        GameObject snowball = Instantiate(snowballPrefab, firePoint.position, firePoint.rotation);
+        snowball.GetComponent<Snowball>().Shoot(transform.forward);
+    }
+
+    private void Update()
+    {
+        CameraRotation();
+    }
 
     private void FixedUpdate()
     {
