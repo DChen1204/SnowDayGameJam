@@ -41,11 +41,11 @@ public class PlayerController : Pawn
     {
         yield return new WaitForSeconds(1f);
 
-        if(team == 1)
+        if(team == 0)
         {
             GetComponent<Renderer>().material.color = Color.red;
         }
-        else if(team == 2)
+        else if(team == 1)
         {
             GetComponent<Renderer>().material.color = Color.blue;
         }
@@ -112,6 +112,9 @@ public class PlayerController : Pawn
             GetComponent<Renderer>().enabled = true;
             GetComponent<Collider>().enabled = true;
             playerText.alpha = 1;
+        } else {
+            SnowFightManager manager = FindObjectOfType<SnowFightManager>();
+            manager.PlayerDied(team);
         }
     }
 

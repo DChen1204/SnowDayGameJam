@@ -5,8 +5,8 @@ using UnityEngine;
 public class SnowFightManager : MonoBehaviour
 {
     public List<GameObject> players = new List<GameObject>();
-    private int team1Count = 0;
-    private int team2Count = 0;
+    public int[] teamPlayerCount = new int[2];
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,21 +20,23 @@ public class SnowFightManager : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            int team = Random.Range(1, 3);
-            if(team1Count == 2) {
-                team = 2;
-            } else if(team2Count == 2) {
+            int team = Random.Range(0, 2);
+            if(teamPlayerCount[0] == 2) {
                 team = 1;
+            } else if(teamPlayerCount[1] == 2) {
+                team = 0;
             }
             players[i].GetComponent<PlayerController>().team = team;
-            if (team == 1)
-            {
-                team1Count++;
-            }
-            else
-            {
-                team2Count++;
-            }
+            teamPlayerCount[team]++;
+        }
+    }
+
+    public void PlayerDied(int team)
+    {
+        teamPlayerCount[team]--;
+        if(teamPlayerCount[team] == 0)
+        {
+            Debug.Log("Team " + team + " has lost!");
         }
     }
 }
