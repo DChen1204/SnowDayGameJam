@@ -27,6 +27,7 @@ public class SnowmanController : Pawn
     public int health = 100;
     public int lives = 3;
     public TextMeshPro playerText;
+    public bool isAlive = true;
 
     private void Awake()
     {
@@ -90,6 +91,7 @@ public class SnowmanController : Pawn
             yield return new WaitForSeconds(1f);
             transform.position = new Vector3(randomSpawnX, 4, randomSpawnZ);
             health = 100;
+            isAlive = true;
 
             // Re-enable player controls and visibility
             GetComponent<Renderer>().enabled = true;
@@ -110,6 +112,11 @@ public class SnowmanController : Pawn
     private void Update()
     {
         CameraRotation();
+
+        if(transform.position.y < 0 && isAlive) {
+            isAlive = false;
+            TakeDamage(100);
+        }
     }
 
     private void FixedUpdate()
