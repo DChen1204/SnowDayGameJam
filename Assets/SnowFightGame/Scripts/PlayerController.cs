@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Game.MinigameFramework.Scripts.Framework.Input;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,8 +23,11 @@ public class PlayerController : Pawn
     public Transform firePoint;
     public GameObject snowballPrefab;
 
-    // Team
+    // Properites
     public int team;
+    public int health = 100;
+    public int lives = 3;
+    public TextMeshPro playerText;
 
     private void Awake()
     {
@@ -58,7 +62,9 @@ public class PlayerController : Pawn
                 lookInputValue = context.ReadValue<Vector2>();
                 break;
             case "ButtonR":
-                LaunchSnowball();
+                if(health > 0) {
+                    LaunchSnowball();
+                }
                 break;
         }
     }
@@ -83,6 +89,39 @@ public class PlayerController : Pawn
     {
         GameObject snowball = Instantiate(snowballPrefab, firePoint.position, firePoint.rotation);
         snowball.GetComponent<Snowball>().Shoot(transform.forward, team);
+    }
+
+    IEnumerator Respawn()
+    {
+        lives--;
+        // Disable player controls and visibility
+        GetComponent<Renderer>().enabled = false;
+        GetComponent<Collider>().enabled = false;
+        playerText.alpha = 0;
+
+        int randomSpawnX = Random.Range(-15, 18);
+        int randomSpawnZ = Random.Range(-25, 11);
+
+        if (lives > 0)
+        {
+            yield return new WaitForSeconds(1f);
+            transform.position = new Vector3(randomSpawnX, 4, randomSpawnZ);
+            health = 100;
+
+            // Re-enable player controls and visibility
+            GetComponent<Renderer>().enabled = true;
+            GetComponent<Collider>().enabled = true;
+            playerText.alpha = 1;
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            StartCoroutine(Respawn());
+        }
     }
 
     private void Update()

@@ -22,12 +22,8 @@ public class Snowball : MonoBehaviour {
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.CompareTag("Player")) {
             PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
-            if (playerController != null) {
-                if (playerController.team == team) {
-                    Debug.Log("Hit a teammate!");
-                } else {
-                    Debug.Log("Hit an enemy!");
-                }
+            if (playerController != null && playerController.team != team) {
+                playerController.TakeDamage(10);
             }
             Destroy(gameObject);
         }
