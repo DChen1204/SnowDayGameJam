@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : Pawn
+public class SnowmanController : Pawn
 {
     // Player Movement
     [SerializeField] private float moveSpeed = 15f;
@@ -24,7 +24,6 @@ public class PlayerController : Pawn
     public GameObject snowballPrefab;
 
     // Properites
-    public int team;
     public int health = 100;
     public int lives = 3;
     public TextMeshPro playerText;
@@ -32,27 +31,11 @@ public class PlayerController : Pawn
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-
-        // Get the team assignment after 1 second
-        StartCoroutine(GetTeamAssignment());
-    }
-
-    IEnumerator GetTeamAssignment()
-    {
-        yield return new WaitForSeconds(1f);
-
-        if(team == 0)
-        {
-            GetComponent<Renderer>().material.color = Color.red;
-        }
-        else if(team == 1)
-        {
-            GetComponent<Renderer>().material.color = Color.blue;
-        }
     }
 
     protected override void OnActionPressed(InputAction.CallbackContext context)
     {
+        Debug.Log(context.action.name);
         switch (context.action.name)
         {
             case "Move":
@@ -88,7 +71,7 @@ public class PlayerController : Pawn
     private void LaunchSnowball()
     {
         GameObject snowball = Instantiate(snowballPrefab, firePoint.position, firePoint.rotation);
-        snowball.GetComponent<Snowball>().Shoot(transform.forward, team);
+        snowball.GetComponent<Snowball>().Shoot(transform.forward);
     }
 
     IEnumerator Respawn()
@@ -112,9 +95,6 @@ public class PlayerController : Pawn
             GetComponent<Renderer>().enabled = true;
             GetComponent<Collider>().enabled = true;
             playerText.alpha = 1;
-        } else {
-            SnowFightManager manager = FindObjectOfType<SnowFightManager>();
-            manager.PlayerDied(team);
         }
     }
 
@@ -135,5 +115,11 @@ public class PlayerController : Pawn
     private void FixedUpdate()
     {
         Move();
+    }
+
+    internal void Die()
+    {
+        SnowFightManager snowFightManager = FindObjectOfType<SnowFightManager>();
+        snowFightManager.KillPlayer(this);
     }
 }

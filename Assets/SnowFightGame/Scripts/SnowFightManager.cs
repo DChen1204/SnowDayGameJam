@@ -1,42 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.MinigameFramework.Scripts.Framework.Input;
+using Game.MinigameFramework.Scripts.Framework.PlayerInfo;
 using UnityEngine;
 
 public class SnowFightManager : MonoBehaviour
 {
-    public List<GameObject> players = new List<GameObject>();
-    public int[] teamPlayerCount = new int[2];
+    private List<Player> alivePlayers = new();
+    MinigameManager.Ranking ranking = new();
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        RandomizeTeams();
+    private void Start() {
+        alivePlayers.AddRange(PlayerManager.players);
     }
 
-    /// <summary>
-    /// Randomizes the teams for the players
-    /// </summary>
-    private void RandomizeTeams()
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            int team = Random.Range(0, 2);
-            if(teamPlayerCount[0] == 2) {
-                team = 1;
-            } else if(teamPlayerCount[1] == 2) {
-                team = 0;
-            }
-            players[i].GetComponent<PlayerController>().team = team;
-            teamPlayerCount[team]++;
+    public void KillPlayer(Pawn pawn) {
+        print($"Player Index: {pawn.playerIndex}");
+        if(pawn.playerIndex < 0) return;
+        
+        Player player = PlayerManager.players[pawn.playerIndex];
+        alivePlayers.Remove(player);
+        ranking.AddFromEnd(player.playerIndex); // add player to lowest available rank
+        
+        if (alivePlayers.Count <= 1) {
+            StopMinigame();
         }
     }
 
-    public void PlayerDied(int team)
-    {
-        teamPlayerCount[team]--;
-        if(teamPlayerCount[team] == 0)
-        {
-            Debug.Log("Team " + team + " has lost!");
+    private void StopMinigame() {
+        StartCoroutine(EndMinigame());
+    }
+
+    IEnumerator EndMinigame() {
+        // "FINISH" ui
+        foreach(Player player in alivePlayers) {
+            ranking.SetRank(player.playerIndex, 1);
         }
+        yield return new WaitForSeconds(2);
+        MinigameManager.instance.EndMinigame(ranking);
     }
 }
